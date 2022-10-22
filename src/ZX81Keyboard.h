@@ -115,6 +115,9 @@ const byte keyMapAlt[] PROGMEM = {
 class ZX81Keyboard {
   public:
     ZX81Keyboard();
+/*
+ * 8 row pins followed by 5 column pins in one array as an argument
+ */
     void begin(byte* pins);
     
 /*
