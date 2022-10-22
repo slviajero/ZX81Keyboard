@@ -28,4 +28,9 @@ read() is the main interface of the library. If no key is pressed, read returns 
 
 There is currently no interrupt or timer mechanism implemented to read the keyboard asynchronously.
 
+Test programs in examples: 
+- simple_read.ino: read keycodes and ASCII values 
+- serial.ino: copy directly from keyboard to Serial
+
+
 
