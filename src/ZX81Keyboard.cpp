@@ -92,22 +92,37 @@ int ZX81Keyboard::peek() {
 /* a key pressed */
     if (state_key != 255) {
 /* go to alt mode */
-        if (state_shift && state_key == ZX81SCAN_NEWLINE) {alt=1; return lastKey=0;}
+        if (state_shift && state_key == ZX81SCAN_NEWLINE) {
+            alt=1; 
+            return lastKey=0;
+        }
 /* no shift and no alt */
         if (!state_shift && !alt) {
+#ifdef USEPROGMEM
             memcpy_P(mapbuffer, keyMap, 40);
             return lastKey=mapbuffer[state_key];
+#else 
+            return lastKey=keyMap[state_key];
+#endif
        } 
 /* shift and no alt */
         if (state_shift && !alt) {
+#ifdef USEPROGMEM
             memcpy_P(mapbuffer, keyMapShifted, 40);
             return lastKey=mapbuffer[state_key];
+#else
+            lastKey=keyMapShifted[state_key];
+#endif
         }
 /* alt keys */
         if (alt) { 
             alt=0; 
+#ifdef USEPROGMEM
             memcpy_P(mapbuffer, keyMapAlt, 40);
             return lastKey=mapbuffer[state_key]; 
+#else
+        return lastKey=keyMapAlt[state_key]; 
+#endif
         }
     } else return lastKey=0;
 }

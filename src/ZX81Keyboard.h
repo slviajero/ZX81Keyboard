@@ -63,7 +63,7 @@
 #define ZX81KEY_RIGHT_ARROW 31
 #define ZX81KEY_F6 18
 #define ZX81KEY_F5 17
-#define ZX81KEY_BACKSPACE 8
+#define ZX81KEY_BACKSPACE 127
 
 /* the scan code of the newline key */
 #define ZX81SCAN_NEWLINE 34
@@ -71,7 +71,10 @@
 /* 
  * the keymap from https://github.com/smittytone/ZX81Alt
  */
+#define USEPROGMEM
 
+
+#ifdef USEPROGMEM
 const byte keyMap[] PROGMEM = {
   '5', '4', '3', '2', '1', 
   't', 'r', 'e', 'w', 'q', 
@@ -107,6 +110,43 @@ const byte keyMapAlt[] PROGMEM = {
   '_', '-', '+', '=', ZX81KEY_RETURN,
   '*', '<', '>', '\'', '#'
 };
+#else
+const byte keyMap[] = {
+  '5', '4', '3', '2', '1', 
+  't', 'r', 'e', 'w', 'q', 
+  '6', '7', '8', '9', '0', 
+  'g', 'f', 'd', 's', 'a', 
+  'y', 'u', 'i', 'o', 'p',
+  'v', 'c', 'x', 'z', 0, /* the shift key is mapped to zero */
+  'h', 'j', 'k', 'l', ZX81KEY_RETURN,
+  'b', 'n', 'm', '.', ' '
+};
+
+/* Keymap if Shift is pressed */
+const byte keyMapShifted[] = {
+  ZX81KEY_LEFT_ARROW, '$', '\\', '@', ZX81KEY_ESC, 
+  'T', 'R', 'E', 'W', 'Q', 
+  ZX81KEY_DOWN_ARROW, ZX81KEY_UP_ARROW, ZX81KEY_RIGHT_ARROW, ZX81KEY_F6, ZX81KEY_BACKSPACE, 
+  'G', 'F', 'D', 'S', 'A', 
+  'Y', 'U', 'I', 'O', 'P',
+  'V', 'C', 'X', 'Z', 0, 
+  'H', 'J', 'K', 'L', ZX81KEY_F5,
+  'B', 'N', 'M', ',', ' '
+};
+
+/* keymap if Shift is pressed plus New Line
+ *Next* key read should be from this table */
+const byte keyMapAlt[] = {
+  ZX81KEY_LEFT_ARROW , '}' , '{' , ']' , '[', 
+  '=' , '<' , 0 , '~' , 64, 
+  ZX81KEY_DOWN_ARROW, ZX81KEY_UP_ARROW, ZX81KEY_RIGHT_ARROW, ZX81KEY_F6, ZX81KEY_BACKSPACE, 
+  0 , 0 , 0 , '|' , 156, 
+  '>', '$', '(', ')', '\"',
+  '/', '?', ';', ':', 0, 
+  '_', '-', '+', '=', ZX81KEY_RETURN,
+  '*', '<', '>', '\'', '#'
+};
+#endif
 
 /**
  * Class definition like in PS2Keyboard, taken from there, originally 
