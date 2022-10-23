@@ -13,8 +13,12 @@ void setup() {
   Serial.begin(9600);
   
   /* first the 8 rows, then the 5 columns or the keyboard */
-  const byte pins[] = {7, 8, 9, 10, 11, 12, 13, A0, 2, 3, 4, 5, 6 };
-  keyboard.begin(pins);
+  /* a possible MEGA pinout */
+  const byte megapins[] = {37, 35, 33, 31, 29, 27, 25, 23, 47, 45, 43, 41, 39};
+  /* the UNO pinout */
+  const byte unopins[] = {7, 8, 9, 10, 11, 12, 13, A0, 2, 3, 4, 5, 6 };
+    
+  keyboard.begin(megapins); 
 }
 
 void loop() {
