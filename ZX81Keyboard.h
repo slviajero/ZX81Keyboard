@@ -27,7 +27,6 @@
  * All other code rewritten from scratch by Stefan Lenz, 2022
  * 
  * 
- *
  */
 
 #define ZX81KEYBOARD_H
@@ -44,8 +43,9 @@
 #define ZX81_SHIFTROW 5
 #define ZX81_SHIFTCOL 4
 
-/* how much time for debounce */
+/* how much time for debounce and how much to abort*/
 #define ZX81_DEBOUNCE_TIME 10
+#define ZX81_DEBOUNCE_THRESHOLD 100
 
 /* 
  * Special keys mapped:

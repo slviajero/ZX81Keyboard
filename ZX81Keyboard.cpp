@@ -27,7 +27,6 @@
  * All other code rewritten from scratch by Stefan Lenz, 2022
  * 
  * 
- *
  */
 
 #ifndef ZX81KEYBOARD_H
@@ -155,6 +154,9 @@ void ZX81Keyboard::getkey() {
 /* scan once */
     scan();
 
+/* remember when we started */
+    long startDebounce=millis();
+
 /* remember the state */
     long debounceTime=millis();
     uint8_t prev_state_key=state_key;
@@ -167,6 +169,11 @@ void ZX81Keyboard::getkey() {
             debounceTime=millis();
             prev_state_key=state_key;
             prev_state_shift=state_shift;
+        }
+/* the longest we wait is DEBOUNCE_THRESHOLD, we give up after that */
+        if (millis()-startDebounce > ZX81_DEBOUNCE_THRESHOLD) {
+            state_key=255;
+            state_shift=0;
         }
     } 
 }
