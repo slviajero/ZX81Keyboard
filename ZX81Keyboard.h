@@ -70,9 +70,9 @@
 
 /* 
  * the keymap from https://github.com/smittytone/ZX81Alt
+ * unset USEPROGMEM if you don't want to use the flash memory
  */
 #define USEPROGMEM
-
 
 #ifdef USEPROGMEM
 const byte keyMap[] PROGMEM = {
@@ -158,7 +158,7 @@ class ZX81Keyboard {
 /*
  * 8 row pins followed by 5 column pins in one array as an argument
  */
-    void begin(byte* pins);
+    void begin(const byte*);
     
 /*
  * Returns true if there is a char to be read, false if not.

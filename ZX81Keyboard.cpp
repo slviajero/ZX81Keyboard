@@ -44,9 +44,9 @@ ZX81Keyboard::ZX81Keyboard() {}
  * pinMode stuff on the fly and reset them all to INPUT after use
  *
  */
-void ZX81Keyboard::begin(byte *pins) {
-    for(int i=0; i<ZX81ROWS; i++) row[i]=pins[i];
-    for(int i=0; i<ZX81COLS; i++) col[i]=pins[i+ZX81ROWS];
+void ZX81Keyboard::begin(const byte * p) {
+    for(int i=0; i<ZX81ROWS; i++) row[i]=p[i];
+    for(int i=0; i<ZX81COLS; i++) col[i]=p[i+ZX81ROWS];
 }
     
 /*
@@ -84,8 +84,6 @@ int ZX81Keyboard::read() {
  */
 int ZX81Keyboard::peek() {
 
-    uint8_t mapbuffer[40]; 
-
 /* get a debounced state of the keyboard */
     getkey();
 
@@ -99,8 +97,7 @@ int ZX81Keyboard::peek() {
 /* no shift and no alt */
         if (!state_shift && !alt) {
 #ifdef USEPROGMEM
-            memcpy_P(mapbuffer, keyMap, 40);
-            return lastKey=mapbuffer[state_key];
+            return lastKey=pgm_read_byte(keyMap + state_key%40);
 #else 
             return lastKey=keyMap[state_key];
 #endif
@@ -108,8 +105,7 @@ int ZX81Keyboard::peek() {
 /* shift and no alt */
         if (state_shift && !alt) {
 #ifdef USEPROGMEM
-            memcpy_P(mapbuffer, keyMapShifted, 40);
-            return lastKey=mapbuffer[state_key];
+            return lastKey=pgm_read_byte(keyMapShifted + state_key%40);
 #else
             lastKey=keyMapShifted[state_key];
 #endif
@@ -118,8 +114,7 @@ int ZX81Keyboard::peek() {
         if (alt) { 
             alt=0; 
 #ifdef USEPROGMEM
-            memcpy_P(mapbuffer, keyMapAlt, 40);
-            return lastKey=mapbuffer[state_key]; 
+        return lastKey=pgm_read_byte(keyMapAlt + state_key%40); 
 #else
         return lastKey=keyMapAlt[state_key]; 
 #endif
