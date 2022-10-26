@@ -16,7 +16,7 @@ void setup() {
   /* a possible MEGA pinout */
   const byte megapins[] = {37, 35, 33, 31, 29, 27, 25, 23, 47, 45, 43, 41, 39};
   /* the UNO pinout */
-  const byte unopins[] = {7, 8, 9, 10, 11, 12, 13, A0, 2, 3, 4, 5, 6 };
+  const byte unopins[] = {7, 8, 9, 10, 11, 12, A0, A1, 2, 3, 4, 5, 6 };
     
   keyboard.begin(megapins); 
 }
