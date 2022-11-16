@@ -139,6 +139,7 @@ void ZX81Keyboard::scan() {
     for (int i=0; i<ZX81ROWS; i++) {
         pinMode(row[i], OUTPUT);
         digitalWrite(row[i], LOW);
+        // delay(1); 
         for (int j=0; j<ZX81COLS; j++) {
             if (!digitalRead(col[j])) {
                 if (i == ZX81_SHIFTROW && j == ZX81_SHIFTCOL) state_shift=1; else state_key=j+ZX81COLS*i;
@@ -153,6 +154,9 @@ void ZX81Keyboard::getkey() {
 
 /* scan once */
     scan();
+
+/* if no key is detected, just return even if the state may be unstable */	
+    if (state_key == 255 && state_shift == 0) return;
 
 /* remember when we started */
     long startDebounce=millis();
